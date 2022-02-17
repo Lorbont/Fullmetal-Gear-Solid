@@ -10,10 +10,10 @@ public class MotionController : MonoBehaviour
     private List<Vector2> CurrentPath = new List<Vector2>();
     private PathFinder PathFinder;
     private bool isMoving;
-    private bool SeeBomber;
+    private bool SeeTarget;
 
     public GameObject Treger;
-    public GameObject DeathEffect;
+   // public GameObject DeathEffect;
     public float MoveSpeed;
 
     // Start is called before the first frame update
@@ -34,8 +34,8 @@ public class MotionController : MonoBehaviour
 
         if (PathTreger.Count == 0)
         {
-            SeeBomber = false;
-            if (!SeeBomber)
+            SeeTarget = false;
+            if (!SeeTarget)
             {
                 var r = Random.Range(0, PathFinder.FreeNodes.Count);
                 RandomPath = PathFinder.GetPath(PathFinder.FreeNodes[r].Position);
@@ -47,7 +47,7 @@ public class MotionController : MonoBehaviour
         else
         {
             CurrentPath = PathTreger;
-            SeeBomber = true;
+            SeeTarget = true;
         }
     }
 
