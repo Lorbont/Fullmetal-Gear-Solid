@@ -8,13 +8,9 @@ public class LevelMenegerScr : MonoBehaviour
     public int fieldWidth, fieldHeight; // переменые ширены и длины поля
     public GameObject[] CellPrefs; // клетки которые нужно создавать
 
-    public Transform setParent; // Обьект под ктороым будем создавать клетки поля 
-    public Transform CreationPoint;
+    public Transform setParentCreationPoint; // Обьект под ктороым будем создавать клетки поля 
 
-    public Sprite[] tileSpr = new Sprite[5];
-
-    Sprite spr;
-
+   
 
     void Start()
     {
@@ -23,21 +19,21 @@ public class LevelMenegerScr : MonoBehaviour
 
     void CreateLevel()
     {
-        Vector3 worldVec = CreationPoint.transform.position;
+        Vector3 worldVec = setParentCreationPoint.transform.position;
 
         for (int i = 0; i < fieldHeight; i++) //проходим по длине
             for (int k = 0; k < fieldWidth; k++) // проходим по ширене
             {
-                Sprite spr;
+                GameObject spr;
 
                 int sprIndex = int.Parse(LoadLevelText(1)[i].ToCharArray()[k].ToString());
-                if (sprIndex != 0)
-                {                                     
-                    spr = tileSpr[0];            
+                if (sprIndex == 0)
+                {
+                    spr = CellPrefs[sprIndex];
                 }
                 else
                 {
-                    spr = tileSpr[UnityEngine.Random.Range(1, tileSpr.Length)]; 
+                    spr = CellPrefs[UnityEngine.Random.Range(1, CellPrefs.Length)];
                 }
 
 
@@ -48,14 +44,11 @@ public class LevelMenegerScr : MonoBehaviour
 
     }
 
-    void CreateCell(Sprite spr, int x, int y, Vector3 wV)
+    void CreateCell(GameObject spr, int x, int y, Vector3 wV)
     {
-        int selectedCell = UnityEngine.Random.Range(0, CellPrefs.Length); // рандомно выбираем какую клетку поля будем создавать
-        
-        GameObject tmplCell = Instantiate(CellPrefs[selectedCell]); // создаем выбранные клетки поля
-        tmplCell.transform.SetParent(setParent, false); // для того чтобы клетки поля создавались под обьектом Cell
 
-        tmplCell.GetComponent<SpriteRenderer>().sprite = spr;
+        GameObject tmplCell = Instantiate(spr); // создаем выбранные клетки поля
+        tmplCell.transform.SetParent(setParentCreationPoint, false); // для того чтобы клетки поля создавались под обьектом Cell
 
         float sprSizeX = tmplCell.GetComponent<SpriteRenderer>().bounds.size.x; // берем размер спрайта (клетки поля) по x
         float sprSizeY = tmplCell.GetComponent<SpriteRenderer>().bounds.size.y; // берем размер спрайта (клетки поля) по y
@@ -73,4 +66,3 @@ public class LevelMenegerScr : MonoBehaviour
     }
 
 }
-

@@ -2,39 +2,41 @@ using UnityEngine;
 
 public class PlayerSwipeMovement : MonoBehaviour
 {
-    public float ForceValue;
+    //public float ForceValue;
 
-    private Rigidbody rb;
+    //private Rigidbody2D rb;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+       // rb = GetComponent<Rigidbody2D>();
 
         SwipeDetection.SwipeEvent += OnSwipe;
     }
 
     private void OnSwipe(Vector2 direction)
     {
+       
         Move(direction);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
-            Move(Vector3.left);
+            Move(Vector2.left);                         // Vector3
         else if (Input.GetKeyDown(KeyCode.D))
-            Move(Vector3.right);
+            Move(Vector2.right);
         else if (Input.GetKeyDown(KeyCode.W))
-            Move(Vector3.forward);
+            Move(Vector2.up);
         else if (Input.GetKeyDown(KeyCode.S))
-            Move(Vector3.back);
+            Move(Vector2.down);
 
     }
 
-    private void Move(Vector3 direction)
+    private void Move(Vector2 direction)
     {
-       rb.AddRelativeForce(direction * ForceValue);
-        // transform.Translate(direction * Time.deltaTime);// ''n ,htl lkz ghjdthrb
+      //  Debug.Log("e");
+        //rb.AddRelativeForce(direction * ForceValue);
+        transform.Translate(direction);
     }
 
 }
